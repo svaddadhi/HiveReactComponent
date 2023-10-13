@@ -5,7 +5,7 @@ This repository contains a customizable dropdown component built using React. Th
 ## Features:
 - Single and multi-item selection
 - Customizable appearance through CSS
-- Efficient rendering for large lists using `react-window`
+- Efficient rendering for large lists using `memo` and `useCallBack`
 - Select All and Deselect All options for multi-item dropdowns
 
 ## Prerequisites:
