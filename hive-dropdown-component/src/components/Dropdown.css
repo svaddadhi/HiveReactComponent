@@ -1,0 +1,58 @@
+.dropdown {
+    position: relative;
+    width: 250px; /* adjust as per your requirement */
+    font-family: Arial, sans-serif; /* change this to your desired font */
+}
+
+.dropdown button {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+    outline: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: background-color 0.2s;
+}
+
+.dropdown button:hover {
+    background-color: #f5f5f5;
+}
+
+.dropdown ul {
+    position: absolute;
+    top: 110%; /* slight gap between button and list */
+    left: 0;
+    width: 100%;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    max-height: 200px; /* set a maximum height */
+    overflow-y: auto; /* make it scrollable if items exceed max-height */
+}
+
+.dropdown li {
+    padding: 10px 15px;
+    cursor: pointer;
+    border-bottom: 1px solid #e5e5e5; /* slight separator */
+    transition: background-color 0.2s;
+}
+
+.dropdown li:last-child {
+    border-bottom: none; /* remove border for the last item */
+}
+
+.dropdown li:hover {
+    background-color: #f5f5f5;
+}
+
+.dropdown li.selected {
+    background-color: #e5e5e5;
+}
+
