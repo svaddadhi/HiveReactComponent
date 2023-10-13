@@ -12,18 +12,29 @@ const Dropdown = ({ items, isMulti = false }) => {
     };
 
     const handleItemClick = (item) => {
-        setSelectedItems(prevState => toggleItemInArray(prevState, item));
+        if (!isMulti) {
+            setSelectedItems(new Set([item])); 
+        } else {
+            setSelectedItems(prevState => toggleItemInArray(prevState, item));
+        }
     };
+
+    const clearSelection = () => {
+        setSelectedItems(new Set());
+    }
 
     return (
         <div className="dropdown">
-            <button onClick={toggleDropdown}>
-                {[...selectedItems].join(', ')} <span className="arrow">{isOpen ? '▲' : '▼'}</span>
-            </button>
+        <button onClick={toggleDropdown}>
+            {selectedItems.size > 0 ? [...selectedItems].join(', ') : ''} <span className="arrow">{isOpen ? '▲' : '▼'}</span>
+        </button>
 
 
             {isOpen && (
                 <ul>
+                    {/* "None" option */}
+                    {!isMulti && <li onClick={clearSelection}>None</li>}
+
                     {isMulti && (
                         <>
                             <li onClick={() => setSelectedItems(selectAllInArray(items))}>Select All</li>
@@ -43,5 +54,6 @@ const Dropdown = ({ items, isMulti = false }) => {
         </div>
     );
 };
+
 
 export default Dropdown;

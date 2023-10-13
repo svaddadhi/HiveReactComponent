@@ -1,7 +1,7 @@
 .dropdown {
     position: relative;
-    width: 250px; /* adjust as per your requirement */
-    font-family: Arial, sans-serif; /* change this to your desired font */
+    width: 250px;
+    font-family: Arial, sans-serif; 
 }
 
 .dropdown button {

@@ -1,8 +1,8 @@
 .App {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background-color: #f4f4f4; 
-  }
-  
+  display: flex;
+  justify-content: center; /* This will center the dropdowns horizontally */
+  align-items: flex-start; /* This will make sure the dropdowns are not vertically centered */
+  min-height: 100vh;
+  background-color: #f4f4f4; 
+  padding-top: 20px;
+}
