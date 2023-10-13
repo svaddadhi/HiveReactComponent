@@ -25,4 +25,4 @@ Make sure you have Node.js and npm installed on your system. If not, you can dow
     npm install
 ## Running the application
 ```
-npm install
+npm start
