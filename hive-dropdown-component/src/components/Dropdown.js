@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { toggleItemInArray, selectAllInArray, deselectAllInArray } from '../utils/dropDownUtils';
-import { FixedSizeList as List } from 'react-window';
 import DropdownItem from './DropdownItem';
 import './Dropdown.css';
 
