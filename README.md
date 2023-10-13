@@ -23,7 +23,6 @@ Make sure you have Node.js and npm installed on your system. If not, you can dow
 3. Install the dependencies:
     ```
     npm install
-
 ## Running the application
 ```
 npm install
