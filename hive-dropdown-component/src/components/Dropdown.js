@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import './Dropdown.css'
+import { toggleItemInArray, selectAllItems, deselectAllItems } from '../utils/dropDownUtils';
+import DropdownItem from './DropdownItem';
+import './Dropdown.css';
 
 const Dropdown = ({ items, isMulti = false }) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -11,49 +13,35 @@ const Dropdown = ({ items, isMulti = false }) => {
 
     const handleItemClick = (item) => {
         if (isMulti) {
-            setSelectedItems(prevState => {
-                if (prevState.includes(item)) {
-                    return prevState.filter(i => i !== item);
-                } else {
-                    return [...prevState, item];
-                }
-            });
+            setSelectedItems(prevState => toggleItemInArray(prevState, item));
         } else {
             setSelectedItems([item]);
             setIsOpen(false);
         }
     };
 
-    const selectAll = () => {
-        setSelectedItems(items);
-    };
-
-    const deselectAll = () => {
-        setSelectedItems([]);
-    };
-
     return (
         <div className="dropdown">
             <button onClick={toggleDropdown}>
-                {selectedItems.join(', ')}
+                {selectedItems.join(', ')} <span className="arrow">{isOpen ? '▲' : '▼'}</span>
             </button>
+
 
             {isOpen && (
                 <ul>
                     {isMulti && (
                         <>
-                            <li onClick={selectAll}>Select All</li>
-                            <li onClick={deselectAll}>Deselect All</li>
+                            <li onClick={() => setSelectedItems(selectAllItems(items))}>Select All</li>
+                            <li onClick={() => setSelectedItems(deselectAllItems())}>Deselect All</li>
                         </>
                     )}
                     {items.map(item => (
-                        <li 
-                            key={item} 
-                            onClick={() => handleItemClick(item)}
-                            className={selectedItems.includes(item) ? 'selected' : ''}
-                        >
-                            {item}
-                        </li>
+                        <DropdownItem 
+                            key={item}
+                            item={item}
+                            handleItemClick={handleItemClick}
+                            isSelected={selectedItems.includes(item)}
+                        />
                     ))}
                 </ul>
             )}
