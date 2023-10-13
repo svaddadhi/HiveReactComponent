@@ -1,29 +1,25 @@
 import React, { useState } from 'react';
-import { toggleItemInArray, selectAllItems, deselectAllItems } from '../utils/dropDownUtils';
+import { toggleItemInArray, selectAllInArray, deselectAllInArray } from '../utils/dropDownUtils';
+import { FixedSizeList as List } from 'react-window';
 import DropdownItem from './DropdownItem';
 import './Dropdown.css';
 
 const Dropdown = ({ items, isMulti = false }) => {
     const [isOpen, setIsOpen] = useState(false);
-    const [selectedItems, setSelectedItems] = useState([]);
+    const [selectedItems, setSelectedItems] = useState(new Set());
 
     const toggleDropdown = () => {
         setIsOpen(!isOpen);
     };
 
     const handleItemClick = (item) => {
-        if (isMulti) {
-            setSelectedItems(prevState => toggleItemInArray(prevState, item));
-        } else {
-            setSelectedItems([item]);
-            setIsOpen(false);
-        }
+        setSelectedItems(prevState => toggleItemInArray(prevState, item));
     };
 
     return (
         <div className="dropdown">
             <button onClick={toggleDropdown}>
-                {selectedItems.join(', ')} <span className="arrow">{isOpen ? '▲' : '▼'}</span>
+                {[...selectedItems].join(', ')} <span className="arrow">{isOpen ? '▲' : '▼'}</span>
             </button>
 
 
@@ -31,8 +27,8 @@ const Dropdown = ({ items, isMulti = false }) => {
                 <ul>
                     {isMulti && (
                         <>
-                            <li onClick={() => setSelectedItems(selectAllItems(items))}>Select All</li>
-                            <li onClick={() => setSelectedItems(deselectAllItems())}>Deselect All</li>
+                            <li onClick={() => setSelectedItems(selectAllInArray(items))}>Select All</li>
+                            <li onClick={() => setSelectedItems(deselectAllInArray())}>Deselect All</li>
                         </>
                     )}
                     {items.map(item => (
@@ -40,7 +36,7 @@ const Dropdown = ({ items, isMulti = false }) => {
                             key={item}
                             item={item}
                             handleItemClick={handleItemClick}
-                            isSelected={selectedItems.includes(item)}
+                            isSelected={selectedItems.has(item)}
                         />
                     ))}
                 </ul>

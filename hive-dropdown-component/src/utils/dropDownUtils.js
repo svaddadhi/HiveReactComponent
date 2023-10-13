@@ -1,11 +1,18 @@
-export const toggleItemInArray = (array, item) => {
-    if (array.includes(item)) {
-        return array.filter(i => i !== item);
+export const toggleItemInArray = (set, item) => {
+    const newSet = new Set(set);
+    if (newSet.has(item)) {
+        newSet.delete(item);
     } else {
-        return [...array, item];
+        newSet.add(item);
     }
+    return newSet;
 };
 
-export const selectAllItems = (items) => items;
+export const selectAllInArray = (items) => {
+    return new Set(items);
+};
 
-export const deselectAllItems = () => [];
+export const deselectAllInArray = () => {
+    return new Set();
+};
+
