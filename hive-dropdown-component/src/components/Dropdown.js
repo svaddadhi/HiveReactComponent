@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, memo } from 'react';
 import { toggleItemInArray, selectAllInArray, deselectAllInArray } from '../utils/dropDownUtils';
 import DropdownItem from './DropdownItem';
 import './Dropdown.css';
@@ -7,42 +7,40 @@ const Dropdown = ({ items, isMulti = false }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedItems, setSelectedItems] = useState(new Set());
 
-    const toggleDropdown = () => {
-        setIsOpen(!isOpen);
-    };
+    const toggleDropdown = useCallback(() => {
+        setIsOpen(prev => !prev);
+    }, []);
 
-    const handleItemClick = (item) => {
+    const handleItemClick = useCallback((item) => {
         if (!isMulti) {
-            setSelectedItems(new Set([item])); 
+            setSelectedItems(new Set([item]));
         } else {
             setSelectedItems(prevState => toggleItemInArray(prevState, item));
         }
-    };
+    }, [isMulti]);
 
-    const clearSelection = () => {
+    const clearSelection = useCallback(() => {
         setSelectedItems(new Set());
-    }
+    }, []);
+
+    const selectedDisplay = [...selectedItems].join(', ');
 
     return (
         <div className="dropdown">
         <button onClick={toggleDropdown}>
-            {selectedItems.size > 0 ? [...selectedItems].join(', ') : ''} <span className="arrow">{isOpen ? '▲' : '▼'}</span>
+            {selectedDisplay} <span className="arrow">{isOpen ? '▲' : '▼'}</span>
         </button>
-
 
             {isOpen && (
                 <ul>
-                    {/* "None" option */}
-                    {!isMulti && <li onClick={clearSelection}>None</li>}
-
-                    {isMulti && (
+                    {!isMulti ? <li onClick={clearSelection}>None</li> : (
                         <>
                             <li onClick={() => setSelectedItems(selectAllInArray(items))}>Select All</li>
                             <li onClick={() => setSelectedItems(deselectAllInArray())}>Deselect All</li>
                         </>
                     )}
                     {items.map(item => (
-                        <DropdownItem 
+                        <MemoizedDropdownItem 
                             key={item}
                             item={item}
                             handleItemClick={handleItemClick}
@@ -55,5 +53,6 @@ const Dropdown = ({ items, isMulti = false }) => {
     );
 };
 
+const MemoizedDropdownItem = memo(DropdownItem);
 
 export default Dropdown;
